@@ -33,6 +33,8 @@ nvl2(nullif(length(first_name), length(last_name)),
 'different length', 'same length') equality from employees;
 select first_name, commission_pct, nvl2(commission_pct, 'yes', 'no') has_bonus from employees;
 
+select product_id from Products where low_fats='Y' and recyclable='Y';
+
 select first_name, coalesce(commission_pct, manager_id, salary) from employees;
 select first_name, salary,
 case
