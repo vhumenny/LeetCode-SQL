@@ -109,3 +109,5 @@ HAVING count(*)>3 and round(avg (salary))>5000
 order by department_id;
 
 select department_id, AVG (salary) from employees group by department_id;
+
+select to_char(event_day, 'YYYY-MM-DD') "day", emp_id "emp_id", sum (out_time-in_time) "total_time" from Employees group by event_day, emp_id;
