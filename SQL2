@@ -1,0 +1,21 @@
+select first_name, last_name, jh.job_id, start_date, end_date from employees e 
+join job_history jh on (e.employee_id= jh.employee_id);
+
+select * from departments join regions on (region_id*10=department_id);
+
+select first_name, last_name, jh.job_id, start_date, end_date from employees e 
+join job_history jh on (e.employee_id=jh.employee_id and 
+e.department_id=jh.department_id);
+
+select first_name, department_name from employees join departments 
+on (employee_id =departments.manager_id);
+
+select * from locations natural join countries natural join regions;
+select * from locations join countries using (country_id) 
+join regions using (region_id);
+select first_name, last_name, jh.job_id, start_date, end_date, department_name
+from employees e join job_history jh on (e.employee_id=jh.employee_id)
+join departments d on (jh.department_id = d.department_id);
+select department_name, min(salary), max(salary)
+from employees e join departments d on (e.department_id = d.department_id)
+group by department_name order by department_name desc;
