@@ -19,3 +19,5 @@ join departments d on (jh.department_id = d.department_id);
 select department_name, min(salary), max(salary)
 from employees e join departments d on (e.department_id = d.department_id)
 group by department_name order by department_name desc;
+
+select p.firstName, p.lastName, a.city, a.state from Person p left outer join Address a on (p.personId=a.personId);
