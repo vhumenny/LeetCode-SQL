@@ -21,3 +21,42 @@ from employees e join departments d on (e.department_id = d.department_id)
 group by department_name order by department_name desc;
 
 select p.firstName, p.lastName, a.city, a.state from Person p left outer join Address a on (p.personId=a.personId);
+
+select emp1.employee_id, emp1.first_name, emp1.manager_id, emp2.first_name 
+manager_name from employees emp1 join 
+employees emp2 on (emp1.manager_id = emp2.employee_id);
+
+select emp2.first_name manager_name, count(*) from employees emp1 join 
+employees emp2 on (emp1.manager_id = emp2.employee_id) group by emp2.first_name
+order by count(*);
+
+select first_name, last_name, salary, department_name from employees e 
+left outer join departments d on (e.department_id = d.department_id);
+
+select first_name, last_name, salary, department_name from departments d 
+left outer join employees e on (e.department_id = d.department_id);
+
+select postal_code, city, department_name from locations l 
+left outer join departments d on (d.location_id=l.location_id);
+
+select department_name, d.department_id, first_name
+from departments d left outer join employees e 
+on (e.department_id = d.department_id)
+where first_name is null;
+
+select first_name, last_name, salary, department_name from employees e
+RIGHT outer join departments d on (e.department_id = d.department_id);
+
+select first_name, last_name, salary, department_name, department_id 
+from employees e RIGHT outer join departments d using (department_id);
+
+select country_name, city, street_address 
+from locations l right outer join countries c on (l.country_id=c.country_id);
+
+select nvl(first_name, 'no employee') first_name, 
+nvl(last_name, 'no employee') last_name, nvl(salary, 0) salary, 
+nvl(department_name, 'no department') department_name 
+from employees e full outer join departments d 
+on (e.department_id = d.department_id);
+
+select * from countries cross join regions order by country_id;
