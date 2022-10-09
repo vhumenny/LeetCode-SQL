@@ -1,0 +1,100 @@
+select * from jobs where job_id like '%MAN%'
+union all
+select * from jobs where job_id like '%MAN%';
+
+select * from jobs where job_id like '%MAN%'
+union
+select * from jobs where job_id like '%MAN%';
+
+select * from jobs where min_salary between 4500 and 8000
+union
+select * from jobs where max_salary between 10000 and 15000
+order by 3;
+
+select * from jobs where job_id like '%MAN%'
+intersect
+select * from jobs where job_id like '%MAN%';
+
+select * from jobs where min_salary between 4500 and 8000
+intersect
+select * from jobs where max_salary between 10000 and 15000;
+
+select first_name, last_name from employees
+intersect
+select street_address, city from locations;
+
+select job_id, job_title, max_salary from jobs 
+where min_salary between 4500 and 8000
+intersect
+select job_id, job_title, max_salary from jobs 
+where max_salary between 10000 and 15000
+order by max_salary desc;
+
+select job_id, job_title, max_salary from jobs 
+where min_salary between 4500 and 8000
+minus
+select job_id, job_title, max_salary from jobs 
+where max_salary between 10000 and 15000;
+
+select first_name, salary from employees where first_name like '%a%'
+intersect
+select first_name, salary from employees where first_name like '%e%'
+minus
+select first_name, salary from employees where first_name like '%l%';
+
+select first_name, salary from employees where first_name like '%a%'
+union
+(select first_name, salary from employees where first_name like '%e%'
+minus
+select first_name, salary from employees where first_name like '%l%');
+
+select manager_id from employees where department_id = 20
+intersect
+select manager_id from employees where department_id = 30
+minus
+select manager_id from employees where department_id = 40;
+
+select department_id, sum(salary) from employees
+group by department_id;
+select job_id, sum(salary) from employees
+group by job_id;
+
+select department_id dep, to_char(null) job, sum(salary) from employees
+group by department_id
+UNION
+select to_number(null), job_id, sum(salary) from employees
+group by job_id;
+
+select manager_id, to_char(null) job_id, to_number (null) department_id, sum (salary)
+from employees
+group by manager_id
+union
+select to_number(null), job_id, to_number (null) , sum (salary) from employees
+group by job_id
+union
+select to_number(null), to_char (null), department_id , sum (salary) from employees
+group by department_id;
+
+select department_id from employees where manager_id = 100
+minus
+select department_id from employees where manager_id in (145,201);
+
+select first_name, last_name, salary from employees 
+where first_name like '_a%'
+intersect
+select first_name, last_name, salary from employees
+where lower(last_name) like '%s%'
+order by salary desc;
+
+select location_id, postal_code, city from locations
+where country_id in (select country_id from countries where country_name in ('Italy', 'Germany'))
+union all
+select location_id, postal_code, city from locations
+where postal_code like '%9%';
+
+select country_id id, country_name country, region_id region from countries
+where length (country_name)>8
+union
+select * from countries
+where region_id !=(select region_id from regions where region_name = 'Europe')
+order by country desc;
