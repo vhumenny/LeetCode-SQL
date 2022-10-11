@@ -51,3 +51,40 @@ update set ne.start_date= sysdate
 delete where ne.job like '%IT%'
 when not matched then insert (emp_id, name, start_date,job)
 values (employee_id, last_name, hire_date, job_id);
+commit;
+
+select * from new_emps;
+
+delete from new_emps where name = 'Tregulov';
+
+commit;
+insert into new_emps values (1000, 'Igor', sysdate, 'IT_PROG');
+update new_emps set emp_id= 300 where emp_id = 100;
+delete from new_emps where emp_id = 101;
+commit;
+delete from new_emps;
+
+insert into new_emps
+(select employee_id, last_name, hire_date, job_id from employees);
+commit;
+select * from new_emps;
+delete from new_emps where name = 'Tregulov';
+rollback;
+insert into new_emps values (1000, 'Igor', sysdate, 'IT_PROG');
+update new_emps set emp_id= 300 where emp_id = 100;
+delete from new_emps where emp_id = 101;
+commit;
+rollback;
+insert into new_emps
+(select employee_id, first_name, hire_date, job_id from employees 
+where employee_id<110);
+
+select * from new_emps;
+
+insert into new_emps values (1000, 'Igor', sysdate, 'IT_PROG');
+savepoint s1;
+update new_emps set emp_id= 300 where emp_id = 100;
+savepoint s2;
+delete from new_emps where emp_id = 101;
+
+rollback to savepoint s2;
