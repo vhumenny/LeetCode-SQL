@@ -88,3 +88,69 @@ savepoint s2;
 delete from new_emps where emp_id = 101;
 
 rollback to savepoint s2;
+
+select* from new_emps for update;
+
+select* from new_emps set emp_id = 1500 where emp_id = 104;
+
+create table locations2 as (select * from locations where 1=2);
+
+insert into locations2 (location_id, street_address, city, country_id)
+values (3300, '1314 Sezam', 'Milan', 'IT');
+insert into locations2 (location_id, street_address, city, country_id)
+values (3400, '1516 Pushkin', 'Turin', 'IT');
+delete from locations2 where location_id = 3300;
+select * from locations2;
+commit;
+
+insert into locations2
+values (3500, '1718 De Golle', '12345', initcap ('Paris'), 'Some province 1',
+upper ('fr'));
+insert into locations2
+values (3600, '1920 Jules Verne', '67890', initcap ('lion'), 'Some province 2',
+upper ('fr'));
+commit;
+
+insert into locations2  
+(select * from locations where length (state_province) >9);
+commit;
+
+CREATE TABLE locations4europe AS (SELECT * FROM locations WHERE 1=2);
+
+insert all
+when 1=1 then
+into locations2
+values (location_id, street_address, postal_code, 
+city, state_province, country_id)
+when country_id in
+(select country_id from countries where region_id = 1) then
+into locations4europe (location_id, street_address, city, country_id)
+values (location_id, street_address, city, country_id)
+select* from locations;
+
+delete * from locations2;
+
+select *from locations2;
+
+commit;
+
+update locations2 set postal_code = '123456' where postal_code is null;
+
+rollback;
+
+update locations2 set postal_code = 
+(select postal_code from locations where location_id = 2600) where postal_code is null;
+commit;
+
+delete from locations2 where country_id = 'IT';
+
+savepoint s1;
+
+update locations2 set street_address= 'Sezam st. 18' where location_id>2500;
+
+savepoint s2;
+delete from locations2 where street_address= 'Sezam st. 18';
+rollback to savepoint s1;
+
+commit;
+
