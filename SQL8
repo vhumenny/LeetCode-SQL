@@ -10,3 +10,43 @@ select column_name, data_type, nullable from user_tab_columns
 where table_name = 'DEPARTMENTS';
 
 select rowid, last_name, salary from employees;
+
+select * from employees;
+
+create table students (
+student_id integer,
+name VARCHAR2 (15),
+start_date date default round(sysdate),
+scholarship number (6,2),
+avg_score number (4,2) default 5);
+
+select * from students;
+
+insert into students (student_id, name, start_date, scholarship, avg_score)
+values(1, 'Zaur', to_date('18-SEP-19'), 1500.3, 7.8);
+insert into students (student_id, name, start_date, scholarship, avg_score)
+values(2, 'Ivan', to_date('19-SEP-19'), 800.356, 7.8);
+insert into students (student_id, name, scholarship)
+values(3, 'Nina', 555);
+
+select * from students;
+
+select * from new_emps2;
+create TABLE new_emps2 as (select employee_id, first_name, last_name, salary,
+department_id from employees);
+
+create TABLE new_dep as (select department_name, max (salary) max_salary,
+MIN (salary) min_salary from employees e join departments d 
+on (e.department_id=d.department_id) group by department_name);
+
+select * from new_dep;
+
+SELECT * FROM regions;
+
+create table regions2 as (select * from regions where 5=6);
+
+SELECT * FROM regions2;
+
+select * from students;
+alter table students add (course number default 3);
+alter table students modify (avg_score number(5,3));
