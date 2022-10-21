@@ -50,3 +50,13 @@ SELECT * FROM regions2;
 select * from students;
 alter table students add (course number default 3);
 alter table students modify (avg_score number(5,3));
+alter table students modify (start_date date default null);
+insert into students (student_id, name)
+values(4, 'Vova');
+alter table students drop column scholarship;
+alter table departments drop column department_id;
+alter table students set unused column start_date;
+alter table students drop unused columns;
+alter table students rename column student_id to id;
+alter table students read only;
+drop table students;
