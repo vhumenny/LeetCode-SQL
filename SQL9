@@ -102,3 +102,24 @@ alter table students modify (course not null);
 alter table students modify (course null);
 
 insert into students values (5, 'Zaur', null, 3);
+
+create table students (
+id number CONSTRAINT st_id_pk primary KEY, name varchar2 (15), course number, 
+faculty_id integer);
+
+select * from students;
+insert into students values (1, 'Misha', null, 3);
+insert into students values (2, 'Vova', null, 3);
+insert into students values (5, 'Zaur', null, 3);
+
+create table students (
+id number primary KEY, name varchar2 (15), course number, 
+faculty_id integer);
+
+create table students (
+id number, name varchar2 (15), course number, 
+faculty_id integer, CONSTRAINT pk primary key (id));
+
+alter table students modify (id CONSTRAINT pk primary key);
+
+alter table students add CONSTRAINT pk primary key (id);
