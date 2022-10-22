@@ -46,3 +46,59 @@ values(2, 'Alex', 'Alexeev', 'a@gmail.com', 'Odesa');
 truncate table friends;
 
 drop table friends;
+
+create table students (
+id number, name varchar2 (15), course number, 
+faculty_id integer,average_score number (5,2), 
+start_date date, scholarship integer,
+CONSTRAINT st_id_unique UNIQUE (id));
+
+select * from students;
+
+create table faculties (
+id number, name varchar2 (15));
+
+insert into students values (1, 'Zaur',3, 1, 8.7, to_date ('15-SEP-17'), 1500);
+insert into students values (1, 'Kolya',3, 1, 8.7, to_date ('15-SEP-17'), 1500);
+insert into students values (2, 'Misha',2, 3, 7.5, to_date ('15-SEP-18'), 800);
+insert into students values (null, 'Zaur',3, 1, 8.7, to_date ('15-SEP-17'), 1500);
+
+drop table students;
+
+create table students (
+id number unique, name varchar2 (15), course number, 
+faculty_id integer,average_score number (5,2), 
+start_date date, scholarship integer);
+
+alter table students add CONSTRAINT st_id_unique unique (id);
+
+insert into faculties values (1, 'CS');
+insert into faculties values (2, 'Economics');
+insert into faculties values (2, 'Philology');
+alter table faculties add unique (id);
+update faculties set id =3 where name = 'Philology';
+select * from faculties;
+alter table faculties modify (id UNIQUE);
+
+alter table students drop constraint abc;
+
+create table students (
+id number, name varchar2 (15), 
+course number CONSTRAINT stud_course_notnull not null, 
+faculty_id integer);
+
+insert into students values (1, 'Zaur', 3, 5);
+select * from students;
+
+create table students (
+id number, name varchar2 (15), 
+course number, 
+faculty_id integer);
+
+drop table students;
+
+alter table students modify (course constraint st_course_not_null not null);
+alter table students modify (course not null);
+alter table students modify (course null);
+
+insert into students values (5, 'Zaur', null, 3);
