@@ -1,0 +1,58 @@
+create table faculties (
+id number primary key, name varchar2 (15));
+
+create table students (
+id number, name varchar2 (15), course number, 
+faculty_id integer references faculties);
+
+insert into faculties values (1, 'CS');
+insert into faculties values (2, 'Marketing');
+insert into students values (1, 'Zaur', 3, 1);
+insert into students values (2, 'Ivan', 2, 2);
+insert into students values (3, 'Misha', 1, 1);
+
+select * from students;
+select * from faculties;
+delete from faculties where id = 1;
+
+create table students (
+id number, name varchar2 (15), course number, 
+faculty_id integer);
+
+create table students (
+id number, name varchar2 (15), course number, 
+faculty_id integer references faculties on delete set null);
+
+drop table students;
+
+drop table faculties;
+
+create table students (
+id number, name varchar2 (15), course number, 
+faculty_id integer not null, constraint fk foreign key (faculty_id) references 
+faculties on delete set null);
+
+create table students (
+id number, name varchar2 (15), course number constraint 
+ch check (course>0 and course<6), 
+faculty_id integer);
+
+create table students (
+id number, name varchar2 (15), course number, 
+faculty_id integer,
+constraint 
+ch check (course>0 and course<6));
+
+alter table students modify (id constraint ch check (id>=1));
+
+alter table students add constraint ch2 check (course>0);
+
+create table students (
+id number, name varchar2 (15), course number, 
+email varchar(15) check (instr(email, '@')>0),
+faculty_id integer);
+
+create table students (
+id number, name varchar2 (15), course number, 
+email varchar(15) check (instr(email, '@')>0) constraint un UNIQUE,
+faculty_id integer);
