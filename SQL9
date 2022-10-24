@@ -123,3 +123,52 @@ faculty_id integer, CONSTRAINT pk primary key (id));
 alter table students modify (id CONSTRAINT pk primary key);
 
 alter table students add CONSTRAINT pk primary key (id);
+
+drop table students;
+
+drop table faculties;
+
+create table faculties (
+id number primary key, name varchar2 (15));
+
+create table students (
+id number, name varchar2 (15), course number, 
+faculty_id integer constraint st_faculty_fk references faculties (id));
+insert into faculties values (1, 'CS');
+insert into faculties values (2, 'Marketing');
+
+insert into students values (1, 'Zaur', 3, 1);
+insert into students values (2, 'Vova', null, 2);
+insert into students values (9, 'Ivan', null, null);
+
+create table students (
+id number, name varchar2 (15), course number, 
+faculty_id integer references faculties (id));
+
+create table students (
+id number, name varchar2 (15), course number, 
+faculty_id integer, constraint fk foreign key (faculty_id) 
+references faculties (id));
+
+create table students (
+id number, name varchar2 (15), course number, 
+faculty_id integer, foreign key (faculty_id) references faculties);
+
+create table faculties (
+id number primary key, name varchar2 (15));
+
+create table students (
+id number, name varchar2 (15), course number, 
+faculty_id integer);
+
+alter table students modify (CONSTRAINT fk faculty_id references faculties (id));
+
+alter table students modify (faculty_id CONSTRAINT fk references faculties (id));
+
+alter table students modify (faculty_id references faculties (id));
+
+alter table students add CONSTRAINT fk foreign key (faculty_id) 
+references faculties (id);
+
+alter table students add foreign key (faculty_id) 
+references faculties (id);
