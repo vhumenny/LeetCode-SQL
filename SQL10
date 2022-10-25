@@ -56,3 +56,31 @@ create table students (
 id number, name varchar2 (15), course number, 
 email varchar(15) check (instr(email, '@')>0) constraint un UNIQUE,
 faculty_id integer);
+
+create index in1 on students (id);
+
+create table students (
+id number, name varchar2 (15), course number);
+insert into students values (1, 'Zaur', 3);
+insert into students values (2, 'Misha', 2);
+insert into students values (2, 'Lesha', 5);
+
+select * from students;
+
+create unique index in2 on students (name);
+
+create unique index st_in1 on students (id);
+create unique index f_in1 on faculties (id);
+alter table students add constraint st_pk primary key (id);
+alter table faculties add constraint sf_pk primary key (id);
+alter table students add constraint st_pk primary key (id);
+
+drop index st_inl;
+
+create table students (
+id number, name varchar2 (15), course number, 
+faculty_id number);
+
+create bitmap index b_ind1 on students (faculty_id);
+
+select * from v$version;
